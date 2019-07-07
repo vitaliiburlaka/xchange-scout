@@ -1,0 +1,41 @@
+.ExchangeRates {
+  > h2 {
+    text-align: center;
+  }
+}
+
+.exchange-rates-list {
+  margin: 0 auto;
+  max-width: 600px;
+  border-top: 1px solid #e2e2e2;
+  padding: 10px 20px;
+  border-radius: 3px;
+  box-shadow: 0 2px 3px rgba(#1e1f20, 0.2);
+
+  &__header {
+    font-weight: 700;
+  }
+
+  &__content {
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__header,
+  &__row {
+    display: flex;
+    align-items: center;
+  }
+
+  &__header-cell,
+  &__cell {
+    flex: 1;
+    padding: 10px 0;
+  }
+
+  &__row {
+    &:not(:last-child) {
+      border-bottom: 1px solid #e2e2e2;
+    }
+  }
+}

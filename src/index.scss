@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.icon {
+  background: #fff;
+}
+
+.btn {
+  padding: 10px 20px;
+  background: linear-gradient(to right, rgb(54, 209, 220), rgb(91, 134, 229));
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 2px 3px rgba(#1e1f20, 0.2);
+  transition: all ease 0.15s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+    opacity: 1;
+  }
+}
+
+// Custom NProgress styles
+#nprogress {
+  .bar {
+    height: 5px;
+  }
+}

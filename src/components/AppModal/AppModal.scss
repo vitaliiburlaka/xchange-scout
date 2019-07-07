@@ -1,0 +1,41 @@
+.App-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(#1e1f20, 0.8);
+  z-index: 100;
+  transition: all ease 0.15s;
+
+  &__content {
+    position: absolute;
+    top: 20%;
+    background: #fff;
+    border-radius: 3px;
+    min-width: 300px;
+    max-width: 80%;
+  }
+
+  &__header {
+    position: relative;
+    padding: 20px 30px;
+
+    .btn-modal-close {
+      position: absolute;
+      border: 0;
+      background: transparent;
+      top: 5px;
+      right: 5px;
+      font-size: 22px;
+    }
+  }
+
+  &__body {
+    padding: 20px 30px;
+    text-align: center;
+  }
+}
