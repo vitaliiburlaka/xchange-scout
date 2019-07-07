@@ -2,6 +2,8 @@
 
 Currency Exchange Rates Application.
 
+Demo [xchange-scout](https://xchange-scout.netlify.com)
+
 <hr />
 
 ## Available Scripts
