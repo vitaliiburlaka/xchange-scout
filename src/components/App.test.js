@@ -1,8 +1,7 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 
 import App from './App'
-import ExchangeRates from './ExchangeRates/ExchangeRates'
 
 describe('<App/>', () => {
   const exchangeRates = {
@@ -16,7 +15,7 @@ describe('<App/>', () => {
   }
 
   it('renders without crashing', () => {
-    shallow(<App {...defaultProps} />)
+    render(<App {...defaultProps} />)
   })
 
   it('should call fetchExchangeRates() on Button click', () => {
@@ -25,10 +24,10 @@ describe('<App/>', () => {
       ...defaultProps,
       fetchExchangeRates: fetchExchangeRatesMockFn,
     }
-    const wrapper = shallow(<App {...props} />)
-    const btn = wrapper.find('[data-testid="get-rates-btn"]')
+    const { getByTestId } = render(<App {...props} />)
+    const btn = getByTestId('get-rates-btn')
 
-    btn.simulate('click')
+    fireEvent.click(btn)
 
     expect(fetchExchangeRatesMockFn).toHaveBeenCalled()
   })
@@ -39,11 +38,11 @@ describe('<App/>', () => {
       exchangeRates: { ...exchangeRates, loading: true },
     }
 
-    const wrapper = shallow(<App {...props} />)
-    const btn = wrapper.find('[data-testid="get-rates-btn"]')
+    const { getByTestId } = render(<App {...props} />)
+    const btn = getByTestId('get-rates-btn')
 
-    expect(btn.text()).toEqual('Loading...')
-    expect(btn.prop('disabled')).toEqual(true)
+    expect(btn.textContent).toBe('Loading...')
+    expect(btn.disabled).toBe(true)
   })
 
   it('should render <ExchangeRates/> if exchange rates data is not empty', () => {
@@ -57,22 +56,20 @@ describe('<App/>', () => {
       exchangeRates: { ...exchangeRates, data },
     }
 
-    const wrapper = shallow(<App {...props} />)
+    const { getByTestId } = render(<App {...props} />)
 
-    expect(wrapper.find(ExchangeRates).length).toEqual(1)
+    expect(getByTestId('exchange-rates')).toBeTruthy()
   })
 
   it('should render Error message on error', () => {
-    const wrapper = mount(<App {...defaultProps} />)
-
-    wrapper.setProps({
+    const props = {
       exchangeRates: { ...exchangeRates, error: 'Internal Server Error' },
-    })
-    const errorEl = wrapper.find('[data-testid="app-modal"]')
+    }
 
-    setTimeout(() => {
-      expect(errorEl.length).toEqual(1)
-    }, 0)
+    const { getByTestId, rerender } = render(<App {...defaultProps} />)
+    rerender(<App {...props} />)
+
+    expect(getByTestId('app-modal')).toBeTruthy()
   })
 
   it('should close modal on Modal Close button click', () => {
@@ -81,15 +78,11 @@ describe('<App/>', () => {
       exchangeRates: { ...exchangeRates, error: 'Internal Server Error' },
     }
 
-    const wrapper = mount(<App {...props} />)
-    const errorEl = wrapper.find('[data-testid="app-modal"]')
-    const btn = wrapper.find('[data-testid="btn-modal-close"]')
-    expect(errorEl.length).toEqual(1)
+    const { getByTestId, queryByTestId } = render(<App {...props} />)
+    expect(getByTestId('app-modal')).toBeTruthy()
 
-    btn.simulate('click')
+    fireEvent.click(getByTestId('btn-modal-close'))
 
-    setTimeout(() => {
-      expect(errorEl.length).toEqual(0)
-    }, 0)
+    expect(queryByTestId('app-modal')).toBeNull()
   })
 })
