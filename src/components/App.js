@@ -56,7 +56,7 @@ function App({ exchangeRates, fetchExchangeRates }) {
             disabled={loading || !data.date}
             data-testid="get-previous-rates-btn"
           >
-            {loading ? 'Loading...' : 'Get Previous Rates'}
+            Get Previous Rates
           </button>
           <button
             className="btn"
@@ -64,7 +64,7 @@ function App({ exchangeRates, fetchExchangeRates }) {
             disabled={loading}
             data-testid="get-rates-btn"
           >
-            {loading ? 'Loading...' : 'Get Rates'}
+            Get Rates
           </button>
         </div>
 

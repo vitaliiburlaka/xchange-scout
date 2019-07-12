@@ -41,7 +41,6 @@ describe('<App/>', () => {
     const { getByTestId } = render(<App {...props} />)
     const btn = getByTestId('get-rates-btn')
 
-    expect(btn.textContent).toBe('Loading...')
     expect(btn.disabled).toBe(true)
   })
 
