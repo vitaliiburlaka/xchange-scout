@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render } from '@testing-library/react'
 
 import ExchangeRates from './ExchangeRates'
 
@@ -11,6 +11,6 @@ describe('<ExchangeRates/>', () => {
   }
 
   it('renders without crashing', () => {
-    shallow(<ExchangeRates {...defaultProps} />)
+    render(<ExchangeRates {...defaultProps} />)
   })
 })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 
 import AppModal from './AppModal'
 
@@ -9,7 +9,7 @@ describe('<AppModal/>', () => {
   }
 
   it('renders without crashing', () => {
-    shallow(<AppModal {...defaultProps} />)
+    render(<AppModal {...defaultProps} />)
   })
 
   it('should call onClose() on Button click', () => {
@@ -18,10 +18,10 @@ describe('<AppModal/>', () => {
       ...defaultProps,
       onClose: onCloseMockFn,
     }
-    const wrapper = shallow(<AppModal {...props} />)
-    const btn = wrapper.find('[data-testid="btn-modal-close"]')
+    const { getByTestId } = render(<AppModal {...props} />)
+    const btn = getByTestId('btn-modal-close')
 
-    btn.simulate('click')
+    fireEvent.click(btn)
 
     expect(onCloseMockFn).toHaveBeenCalled()
   })

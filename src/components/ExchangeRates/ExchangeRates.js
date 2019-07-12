@@ -5,7 +5,7 @@ import './ExchangeRates.scss'
 
 function ExchangeRates({ rates, base, date }) {
   return (
-    <div className="ExchangeRates">
+    <div className="ExchangeRates" data-testid="exchange-rates">
       <h2>Currency Exchange Rates at {date}</h2>
 
       <div className="exchange-rates-list">
