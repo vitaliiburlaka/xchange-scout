@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import NProgress from 'nprogress'
+import { format, subDays } from 'date-fns'
 
 import ExchangeRates from './ExchangeRates/ExchangeRates'
 import AppModal from './AppModal/AppModal'
@@ -14,10 +16,22 @@ function App({ exchangeRates, fetchExchangeRates }) {
     if (!!error) {
       setIsOpen(true)
     }
-  }, [error])
+    if (loading) {
+      NProgress.start()
+    } else {
+      NProgress.done()
+    }
+  }, [error, loading])
 
   const handleModalClose = () => {
     setIsOpen(false)
+  }
+
+  const getPrevDate = date => {
+    const prevDate = subDays(new Date(date), 1)
+    const formatedPrevDate = format(prevDate, 'YYYY-MM-DD')
+
+    return formatedPrevDate
   }
 
   return (
@@ -38,7 +52,15 @@ function App({ exchangeRates, fetchExchangeRates }) {
         <div className="App__topbar">
           <button
             className="btn"
-            onClick={fetchExchangeRates}
+            onClick={() => fetchExchangeRates(getPrevDate(data.date))}
+            disabled={loading || !data.date}
+            data-testid="get-previous-rates-btn"
+          >
+            {loading ? 'Loading...' : 'Get Previous Rates'}
+          </button>
+          <button
+            className="btn"
+            onClick={() => fetchExchangeRates()}
             disabled={loading}
             data-testid="get-rates-btn"
           >

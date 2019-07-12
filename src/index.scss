@@ -47,6 +47,10 @@ h6 {
     opacity: 0.8;
   }
 
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
   &[disabled] {
     cursor: not-allowed;
     filter: grayscale(100%);

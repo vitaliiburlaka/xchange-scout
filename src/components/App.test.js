@@ -18,7 +18,7 @@ describe('<App/>', () => {
     render(<App {...defaultProps} />)
   })
 
-  it('should call fetchExchangeRates() on Button click', () => {
+  it('should call fetchExchangeRates() on "Get Rates" Button click', () => {
     const fetchExchangeRatesMockFn = jest.fn()
     const props = {
       ...defaultProps,
@@ -43,6 +43,26 @@ describe('<App/>', () => {
 
     expect(btn.textContent).toBe('Loading...')
     expect(btn.disabled).toBe(true)
+  })
+
+  it('should call fetchExchangeRates() with previous date param on "Get Previous Rates" Button click', () => {
+    const fetchExchangeRatesMockFn = jest.fn()
+    const data = {
+      rates: { USD: 1.234 },
+      date: '2019-07-04',
+      base: 'EUR',
+    }
+    const props = {
+      ...defaultProps,
+      exchangeRates: { ...defaultProps.exchangeRates, data },
+      fetchExchangeRates: fetchExchangeRatesMockFn,
+    }
+    const { getByTestId } = render(<App {...props} />)
+    const btn = getByTestId('get-previous-rates-btn')
+
+    fireEvent.click(btn)
+
+    expect(fetchExchangeRatesMockFn).toHaveBeenCalledWith('2019-07-03')
   })
 
   it('should render <ExchangeRates/> if exchange rates data is not empty', () => {
