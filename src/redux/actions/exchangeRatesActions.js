@@ -1,5 +1,3 @@
-import NProgress from 'nprogress'
-
 import actionTypes from '../../constants/actionTypes'
 import getExchangeRates from '../../api/getExchangeRates'
 
@@ -17,17 +15,14 @@ const getExchangeRatesFailure = error => ({
   payload: { error },
 })
 
-const fetchExchangeRates = () => async dispatch => {
+const fetchExchangeRates = date => async dispatch => {
   dispatch(getExchangeRatesRequest())
-  NProgress.start()
 
   try {
-    const response = await getExchangeRates()
+    const response = await getExchangeRates(date)
     dispatch(getExchangeRatesSuccess(response))
-    NProgress.done()
   } catch (error) {
     dispatch(getExchangeRatesFailure(error))
-    NProgress.done()
   }
 }
 
