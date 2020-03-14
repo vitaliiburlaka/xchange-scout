@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import NProgress from 'nprogress'
 import { format, subDays } from 'date-fns'
 
-import ExchangeRates from './ExchangeRates/ExchangeRates'
 import AppModal from './AppModal/AppModal'
 
 import './App.scss'
+
+const LazyExchangeRates = React.lazy(() =>
+  import('./ExchangeRates/ExchangeRates')
+)
 
 function App({ exchangeRates, fetchExchangeRates }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -29,7 +32,7 @@ function App({ exchangeRates, fetchExchangeRates }) {
 
   const getPrevDate = date => {
     const prevDate = subDays(new Date(date), 1)
-    const formatedPrevDate = format(prevDate, 'YYYY-MM-DD')
+    const formatedPrevDate = format(prevDate, 'yyyy-MM-dd')
 
     return formatedPrevDate
   }
@@ -54,9 +57,9 @@ function App({ exchangeRates, fetchExchangeRates }) {
             className="btn"
             onClick={() => fetchExchangeRates(getPrevDate(data.date))}
             disabled={loading || !data.date}
-            data-testid="get-previous-rates-btn"
+            data-testid="prev-rates-btn"
           >
-            Get Previous Rates
+            Prev Rates
           </button>
           <button
             className="btn"
@@ -68,7 +71,11 @@ function App({ exchangeRates, fetchExchangeRates }) {
           </button>
         </div>
 
-        {data.rates && <ExchangeRates {...data} />}
+        {data.rates && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyExchangeRates {...data} />
+          </Suspense>
+        )}
       </div>
 
       {isOpen && (

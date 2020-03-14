@@ -44,7 +44,7 @@ describe('<App/>', () => {
     expect(btn.disabled).toBe(true)
   })
 
-  it('should call fetchExchangeRates() with previous date param on "Get Previous Rates" Button click', () => {
+  it('should call fetchExchangeRates() with previous date param on "Prev Rates" button click', () => {
     const fetchExchangeRatesMockFn = jest.fn()
     const data = {
       rates: { USD: 1.234 },
@@ -57,7 +57,7 @@ describe('<App/>', () => {
       fetchExchangeRates: fetchExchangeRatesMockFn,
     }
     const { getByTestId } = render(<App {...props} />)
-    const btn = getByTestId('get-previous-rates-btn')
+    const btn = getByTestId('prev-rates-btn')
 
     fireEvent.click(btn)
 
